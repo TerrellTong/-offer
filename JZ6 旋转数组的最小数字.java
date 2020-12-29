@@ -22,10 +22,18 @@ public class Solution {
             if(array[right] < array[mid])
                  left = mid+1;
             else if(array[mid] == array[right])
-                //此时把right排除掉
+				//出现这种情况的array类似 [1,0,1,1,1] 或者[1,1,1,0,1]，此时最小数字不好判断在mid左边
+				//还是右边，因此只好一个个试
                 right = right-1;
             else
                 //不能随便排除right，因为有可能mid就是right！！
+				/*
+				注意这里有个坑：如果待查询的范围最后只剩两个数，那么mid 一定会指向下标靠前的数字
+				比如 array = [4,6]
+				array[low] = 4 ;array[mid] = 4 ; array[high] = 6 ;
+				如果high = mid - 1，就会产生错误， 因此high = mid
+				但情形(1)中low = mid + 1就不会错误
+				*/
                 right = mid;
         }
         return array[left];
