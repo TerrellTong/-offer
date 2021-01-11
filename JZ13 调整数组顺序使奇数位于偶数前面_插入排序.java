@@ -1,39 +1,26 @@
 /*
 	算法思想：
-		多次翻转，首先整个数组进行翻转，然后从0开始到取余的位置进行翻转，最后对取余后的位置进行翻转
-		二刷，之前是用链式反应，不会做！！！
-		
-		
-题解：https://leetcode-cn.com/problems/rotate-array/solution/javadai-ma-3chong-fang-shi-tu-wen-xiang-q8lz9/ ，方法二
+		采用插入排序，当前数是奇数，就往前找，遇到偶数就往它前面插
+
+题解：https://www.nowcoder.com/questionTerminal/beb5aa231adc45b2a5dcc5b62c93f593 zgljl2012 
 */
 
 
 
-class Solution {
-    public List<String> summaryRanges(int[] nums) {
-        if(nums.length == 0)
-            return new ArrayList();
-
-        List<String> res = new ArrayList();
-        int left = nums[0];
-        int pre = left;
-        for(int i=1;i<nums.length;i++){
-            if(nums[i]-1 == pre){
-                pre = nums[i];
-            }else{
-                if(left == pre)
-                    res.add(left+"");
-                else
-                    res.add(left+"->"+pre);
-                left = nums[i];
-                pre = left;
+public class Solution {
+    public void reOrderArray(int [] array) {
+        for(int i=1;i<array.length;i++){
+            int tmp = array[i];
+            //如果当前是奇数，则进行判断，判断之前的是否有偶数，如果有偶数，则将其交换到前面！
+            if(tmp % 2 == 1){
+                for(int j = i;j>0;j--){
+                    if(array[j-1] % 2 == 0){
+                        int t = array[j];
+                        array[j] = array[j-1];
+                        array[j-1] = t;
+                    }
+                }
             }
         }
-        if(left == pre)
-            res.add(left+"");
-        else{
-            res.add(left+"->"+pre);
-        }
-        return res;
     }
 }
